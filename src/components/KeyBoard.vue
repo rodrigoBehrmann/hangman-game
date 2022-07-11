@@ -6,7 +6,7 @@
             v-for="(letter, key) in 'abcdefghijklmnopqrstuvwxyz'"
             :key="key"
             :disabled="verifyLetter(letter)"
-            v-on:click="alert(letter)">
+            v-on:click="play(letter)">
             {{letter}}
 
         </button>
@@ -24,7 +24,8 @@ export default{
     name: 'KeyBoardItem',
     props:{
         letters: Array,
-        verifyLetter: Function
+        verifyLetter: Function,
+        play: Function
     },
     data(){
         return{
@@ -53,6 +54,7 @@ export default{
 
     .keyboard-button{
         margin: 5px;
+        text-transform: uppercase;
     }
 
 </style>

@@ -13,8 +13,17 @@
         />
 
         <KeyBoard
+            v-if="step === 'game'"
             :letters="letters"
             :verifyLetter="verifyLetter"
+            :play="play"
+        />
+
+        <Final 
+            v-if="step != 'game'"
+            :step="step"
+            :text="step === 'winner' ? 'Congratulations :)' : 'Game Over :('"
+            :playAgain="playAgain"
         />
 
     </div>
@@ -27,6 +36,7 @@
 import Gibbet from './Gibbet';
 import Word from './Word';
 import KeyBoard from './KeyBoard';
+import Final from './Final';
 
 export default{
     name: 'GameItem',
@@ -36,7 +46,9 @@ export default{
         tip: String,
         verifyLetter: Function,
         step: String,
-        letters: Array
+        letters: Array,
+        play: Function,
+        playAgain: Function
     },
     data(){
         return{
@@ -49,7 +61,8 @@ export default{
     components:{
         Gibbet,
         Word,
-        KeyBoard
+        KeyBoard,
+        Final
     }
 }
 </script>

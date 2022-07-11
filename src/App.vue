@@ -11,8 +11,8 @@
         />
 
         <Formulario v-if="step === 'tip'"
-        title="Defina a dica"
-        button="Iniciar Jogo"
+        title="Set a tip:"
+        button="Play"
         :action="setTip"
 
         />
@@ -27,6 +27,8 @@
           :verifyLetter="verifyLetter"
           :step="step"
           :letters="letters"
+          :play="play"
+          :playAgain="playAgain"
         />
       </section>
 
@@ -70,6 +72,44 @@ export default {
 
     verifyLetter: function(letter){
       return this.letters.find(item => item.toLowerCase() === letter.toLowerCase());
+    },
+
+    play: function(letter){
+      //adiciona letra jogada
+      this.letters.push(letter);
+
+      this.verifyErrors(letter);
+    },
+
+    verifyErrors: function(letter){
+      //acerto
+      if(this.word.toLowerCase().indexOf(letter.toLowerCase()) >= 0 ){
+        return this.verifyHits();
+      }
+
+      //erros
+      this.errors++;
+
+      //enforcado
+      if(this.errors === 6){
+        this.step = 'hanged';
+      }
+    },
+
+    verifyHits: function(){
+      let singleLetters = [...new Set(this.word.split(''))];
+      if(singleLetters.length === (this.letters.length - this.errors)){
+        this.step = 'winner';
+      }
+    },
+
+    playAgain: function(){
+      this.word = '',
+      this.tip = '',
+      this.errors = 0,
+      this.letters = [],
+      this.screen = 'home',
+      this.step = 'word'
     }
 
   }
